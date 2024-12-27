@@ -49,17 +49,14 @@ class Pool {
 
 	async preview(worker: WorkerThread, preview: Blob) {
 		const task = this.processing.find((task) => task.id === worker.task_id)
-		console.log({ preview, task })
 		if (task) {
 			const url = await URL.createObjectURL(preview)
-			console.log({ url })
 			task.preview = url
 		}
 	}
 
 	async result(worker: WorkerThread, result: Blob, ms: number) {
 		const task = this.processing.find((task) => task.id === worker.task_id)
-		console.log({ result, task })
 		if (task) {
 			task.status = 'complete'
 			task.result = result
@@ -132,7 +129,6 @@ class WorkerThread {
 	callback(event: MessageEvent<{ thumb: ArrayBuffer } & { buffer: ArrayBuffer; type: string } & { error: any }>) {
 		const ms = performance.now() - this.started
 		const { thumb, buffer, type, error } = event.data
-		console.log(event.data)
 		if (error) {
 			this.pool.error(this, error)
 		} else if (thumb) {

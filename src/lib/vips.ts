@@ -32,8 +32,6 @@ export async function thumbnail(source: ArrayBuffer) {
 		keep: vips.ForeignKeep.none
 	})
 
-	console.log({thumb})
-
 	image.delete()
 
 	console.timeEnd('thumbnail')
